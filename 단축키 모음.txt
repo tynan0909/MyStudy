@@ -1,0 +1,20 @@
+
+🖥 VS Code 단축키 (Windows / Linux)
+기능				단축키
+파일 열기			Ctrl + P
+모든 명령 실행 		(Command Palette)	Ctrl + Shift + P
+코드 검색			Ctrl + Shift + F
+변수/함수로 이동		Ctrl + Shift + O
+터미널 열기		Ctrl + `
+사이드바 토글		Ctrl + B
+라인 복사			Alt + Shift + ↓
+라인 삭제			Ctrl + Shift + K
+자동 정렬(Format)	Alt + Shift + F
+다중 커서			Alt + Click
+이전/다음 탭		Ctrl + PageUp / PageDown
+부분 캡쳐			Win + Shift + S
+치환				Ctrl + F 하고 화살표
+
+
+
+https://buly.kr/4QnhrGa

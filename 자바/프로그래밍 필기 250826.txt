@@ -1,0 +1,49 @@
+10장 클래스 변수와 클래스 메소드(HELLO_PROJECT프로젝트 stat패키지에 실습잇음)
+
+static은 정적인 - 메모리에 고정되어 있다(상주하고 있다)
+dynamic은 동적인
+
+메인쓰레드로부터 실행
+
+static이 있으면 메모리에 올라와 있음
+non-static(new를 사용하면)을 하면 메모리에 올렷다 말앗다 할 수 있다는것.
+참조(referance)하는게 없는 object는 garbage가 된다.
+static이 메모리를 잡아먹긴 하지만 바로 쓸 수 있으니 빠르다
+로딩하는것을 클래스 로더라고 부름
+
+잠깐 있다 가는걸 instance라고 부름(입학 - 졸업)
+static은 계속 있는거임(창립멤버)
+
+같은 클래스 안에 있어도
+static안에 다른 메소드를 부르려면 new를 써도 되고 부르려던 메소드 앞에 static을 붙여도 됨
+
+즉 non-static끼리는 그냥 부를 수 있다
+왜냐면 non-static이 실행되었다면 이미 메모리에 올라온거니까.
+
+그리고 non-static이 static을 그냥 부를 수 있다.
+
+다른클래스의 static끼리는 클래스이름.메소드이름( );로 부를 수 있다
+
+static을 메소드말고 다른데에 붙이면?
+정수앞에 붙일수도 잇다
+
+instance변수는 자기만의 변수고
+static변수는 그냥 new와 상관없이 흘러감
+
+(변수일때)new는 공유할 수 있는 무언가가 없고
+static은 공유해서 사용가능, 상수값은 static final 붙이면 좋음 ex) static final int a = 1;
+
+(메소드일때)static은 쉽게 사용가능 ex) System.out.println()에서 out이 static 메소드임
+
+
+singleton으로 보안을 챙길 수 있음
+
+안쪽에 static이 있으면 밖에도 static이 있어야 함
+
+코드가 날라가도 우클릭 - Team - Show Local History에서 보면 댐
+
+
+Git
+
+workspace에서 local로 올리는걸 commit, local에서 서버로 올리는걸 push라 한다.
+서버에서 workspace로 가는걸 pull이라 한다.

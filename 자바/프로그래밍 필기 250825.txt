@@ -1,0 +1,51 @@
+8장 클래스 패스(Class Path) : 자바 가상머신이 클래스 파일을 찾는 경로
+
+path는 경로
+로컬에선 이클립스에서 묶어서 빌드 가능
+but 서버(리눅스)에선 내가 만든 A라는 프로그램이
+들어갈 경로를 잡아야 함
+javac 혹은 java 실행 명령어에 -classpath, -cp 옵션을 사용하여 지정
+
+클래스 패스를 고정시키는 방법
+
+
+8-2 패키지의 이해
+
+패키지를 쓰는 이유? 관련된 클래스를 하나로 묶으려고
+동일한 이름의 클래스라도 패키지가 다르면 쓸 수 있음
+패키지 = 폴더(캡슐화 가능한)
+
+return new @@@.%%%.$$$();는 보통 잘 안쓰고 강조할 때 사용
+보통은 import @@@.%%%.$$$ 씀
+JAR파일 : Java 압축
+WAR파일 : web 압축
+
+
+9장 정보은닉 그리고 캡슐화
+
+OOP -> SOLID 캡상다 (캡슐화 상속 다형성) + 예외처리 + 컬렉션
+여긴 캡슐화를 다룸
+
+인스턴스 멤버를 대상으로 하는 public, protected, private, default 선언에 대한 정리
+
+캡슐화란 보호막(방화벽)의 기능과 대표적인 역할을 알려주는 기능을 함
+private걸어두면 원래는 못쓰는데 if문으로 키가 일치하면 사용할 수 있게 만들 수 있음
+
+만약 클래스를 만들려면 만들기전에 '정보성' 클래스인지 '처리성' 클래스인지 미리 생각해둬야 함
+public은 패키지가 달라도 오픈, default는 패키지가 다르면 차단
+
+즉 나만 쓰는 메소드는 private쓰고 나머지는 public 쓰면 댐
+이유가 없으면 private 쓰고 (public을 쓸)이유가 있을 때 public 쓰셈
+
+class에는 private 못붙임
+final abstract는 붙일 수 있음
+
+protected는 상속된것까지 허용
+
+정보성 클래스/객체를 java bean이라고 함 -> 서버로 간 Java Bean을 Enterprise Java Bean이라 부른다 -> 약자 EJB -> Spring Bean
+
+빈곳 우클릭 - Source - getters and setters - 여기서 get set이 잇는데 set은 저장 get은 읽기임
+
+Java Bean은 VO 와 DTO로 나눌 수 있다.
+Vo는 Value object고
+DTO는 Data transfer object이다

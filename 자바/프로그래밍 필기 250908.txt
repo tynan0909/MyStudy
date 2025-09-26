@@ -1,0 +1,106 @@
+Java = OOP = SOLID
+캡상다
+
+캡슐화		상속			다형성
+capsule		inheritance		polymophis
+
+extends 안에 new가 포함되어 있다
+is a 관계라고도 할 수 있음
+new로 하는건 has a 관계
+
+오버라이딩: 재정의(상속의 꽃)
+오버로딩은 생성자,메소드가 같은 이름이 여러개 존재할 수 있다(매개변수만다름)
+
+A is a B, B is a C -> A is a C 가 될 수 있다.(다형성)
+
+추상(abstract)클래스, 인터페이스는 new가 안됨
+추상클래스는 상속을 받게할라고 만들어놓은거임. 
+인터페이스는 서로 다중상속이 가능하다(클래스는 두 부모를 가질 수없음)
+더이상 상속을 시키지 않으려면 final을 붙이면 됨
+
+인터페이스는 표준이기 때문에 모두 상수, static이다.
+
+설계하고싶으면 추상클래스or인터페이스 쓰면 댐
+
+다형성
+1) 매개변수 (mid) { }
+2) 변수 mid[ ]
+3) 리턴타입 Mid	
+return
+
+이론 자바 메인
+1) 캡상다
+2) 예외처리
+3) 컬렉션
+4) 그외
+
+실기
+1) if
+2) for
+3) [ ](어레이)
+
+18장 예외처리
+
+exception 
+
+빨간줄이 뜨는건 예상 가능한 에러
+빨간줄이 없는데 에러가 뜨는건 런타임에러, 예상불가능한 에러
+
+메소드 안에 try { }를 넣고 { } 안에서 코딩, {}뒤에 catch(Exception e) { e.printStackTrace();}를 넣어주면 에러로 터지는걸 막을 수 있음
+
+catch뒤에 Exception e는 에러뜨는걸 다 가져가서
+그 밑에 ClassCastException e 같은걸 넣으면 가져갈 게 없음 따라서 Exception e는 맨 마지막에 넣으면 됨
+
+| 이 글자는 \에 sft 하면 나옴 뜻은 or
+
+catch로 에러를 잡고 에러메세지 출력 후 다시 던질 수 있음
+
+아무튼 예외처리는 에러가 났을 때 서버를 리부팅하지 않게 미리 예방하는것이다.
+
+Exception의 종류 대표적인 3가지
+ArrayIndexOutOfBoundsException
+NullPointerException
+ClassCastException
+
+try안에서 코딩을 하고~ 예외발생시 catch에서 잡으면 댐
+혹은 
+throws로 던져버릴지 정하면 댐
+
+throw 할 경우 throwable 한 런타임 exception 클래스가 존재 한다
+
+
+예외처리 실습)
+1. 예외 종류 3가지를 발생시켜 보시오.
+2. try ~ catch로 1번의 예외를 잡아 보시오
+3. 여러분이 정의한 예외 클래스를 만들어서 throw 하시오
+4. 1번에서 발생한 예외를 한번에 잡아보시오(고치라는거아님)
+
+catch( ) { } 다음에 finally붙이는것도 좋음 finally{ sysout메세지 }
+return 안쓰는 이유? try catch안에 잇으면 에러남
+정말 중요한건 finally에 넣어라
+
+근데 finally는 옛날버전이고 try(	) 괄호안에 접속코드 넣으면  해제는 자동으로 됨ㅇ
+
+3번의경우 exception을 extends해서 만들면 됨
+
+접속코드 만드는법은 그 이름의 클래스를 closeable를 implements 하고
+close( ) throws 익셉션 하면 댐
+
+
+JVM 퀴즈)
+1. 이클립스의 JVM 힙 사이즈를 늘려보시오
+
+
+
+421p.
+참조관계가 없는 인스턴스는 가비지로 이동해 고독사
+
+
+19-2 Object 클래스
+
+finalize는 object클래스에서 인스턴스가 가비지로 소멸전에 발동되는 죽음의메아리다
+
+
+Object 비교 실습)
+
+1. 핸드폰의 전화번호는 다르지만 소유주가 같은 경우, 한대의 핸드폰만 배열에 저장하고 싶다.

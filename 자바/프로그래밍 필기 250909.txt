@@ -1,0 +1,70 @@
+실기	if	for	Array
+
+이론		캡상다설계		컬렉션	예외처리	자료구조	빅데이터
+
+코린이 	- 실기	의 if for array는 해야함(개발자의 기본)
+		- 이론	의 예외처리는 해야함(에러 잡아야함)
+				컬랙션 캡상다는 어려움
+
+Object클래스는
+모든 클래스의 조상클래스.
+비교 equals		복사 clone		Key hashcode	클래스 링크? class
+
+
+23장 컬렉 프레임워크
+
+컬렉션이란?
+
+		L			S			M
+
+		list			set			map
+
+List는 배열과 꽤 유사함(순서유지, 중복가능, 자동크기조절, ArrayList, LinkedList, Vector, Stack 등으로 구현)
+
+Set은 주머니, 집합이라고 생각하면 됨(중복이 안되는 저장구조, 순서는 없다)
+
+Map은 말그대로 지도. 매핑한다고도 하는데 x축과 y축으로 된 자료구조(페어. 첫번째값을 key, 두번째값을 value라고 한다) 
+- 실제로 쓰는 정보는 value고 key는 불러오는 역할임
+
+많이 쓰는 구조 = List구조에 Map을 담는다
+그다음은 List에 Bean
+
+정리
+1)List & Map
+2)List & Bean
+3)Set & Override 중복로직
+
+List에서 많이 쓰는건 ArrayList, LinkedList이다.
+여기서 ArrayList는 배열의 List이고
+LinkedList는 저장속도가 빠름
+
+		List a2 = new ArrayList();
+		ArrayList a = new ArrayList();
+중에 위에것이 더 좋음(다형성)
+
+ArrayList(import해야함)는 사이즈 조절도 알아서 됨
+
+integer <- int로 햇는데 이거로 저장된거를 Wrapper(감싸다)라고 함
+즉 int를 integer라는 참조클래스로 감싼것
+boolean이나 float도 각자 자기만의 wrapper가 있다 wrapper를 wrapper class라고 한다
+
+감싸는 이유? 기본타입을 object로 바꿔야 컬렉션에 들어가서 (객체만 저장이 가능하기 때문)
+
+ArrayList에 순서없이 넣으면 알아서 차례대로 넣어주지만, 건너뛰면 에러가 난다 (특정 위치에 요소 삽입 → 해당 인덱스가 존재해야 함)
+add(index, value)는 삽입 위치가 현재 크기 이하여야만 동작
+
+
+제네릭
+
+ArrayList에서 데이터를 꺼낼때 엉뚱한걸 가져오는 경우가 많아서
+원하는 카테고리의 데이터만 가져올 수 있게 하는 것(꺽쇠 <>안에 씀) 	ex) 	List<Orange> a = new ArrayList<Orange>();
+
+Front				Back				DB
+
+JS				Java				Oracle
+sort				sort				Structure Query Language(SQL)
+UIX		<-		B.L		<-		정보(Basic)
+
+오라클(DB)에서 처리를 끝내고 자바(백엔드)로 자바스크립트(프론트엔드)로 보내는게 빠름
+
+Map은 key가 동일하면 앞에 저장된걸 지운다, 순서도 없음

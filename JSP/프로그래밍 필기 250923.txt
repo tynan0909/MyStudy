@@ -1,0 +1,27 @@
+다운받아야 할거
+
+이클립스 j2e 25.9
+jdk 20
+mySql + workbench
+tomcat 10.1
+
+서버에서 실제로 이미지 올리는 공간은 .metadata
+192.168.0.18	센세 ip
+
+
+Java	 ->	 DB	 ->	 WEB		->	Spring Framework
+JSE				JEE(JSP)
+
+Servlet	->	JSP	->	MVC(Model View Controller)
+Model 1.0		1.5		2
+
+servlet란? server + applet의 합성어
+<A>, </A> 이런걸 태그라고 하는데, <html	<xml도 태그임
+
+원래는 파일을 받아서 직접 run 햇다면, servlet은 서버에서 돌리고 결과만 보내줌
+
+http란? 요청(request) 보내면 응답(response) 보내줌
+
+Wel Deployment Assembly에서 /만 뜨는 폴더가 시작점임(바꿔서 설정할 수 있으니까 함부로 확신하지 말라는뜻)
+
+http://192.168.0.18:8080/SERVLET_PROJECT/ghi?msg=와샌즈파피루스&nick=sasaki

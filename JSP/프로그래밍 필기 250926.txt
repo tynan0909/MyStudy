@@ -1,0 +1,100 @@
+깃 사용법(강의내용아님)
+
+다운받고 원하는곳에 폴더만듬 -> 폴더 우클릭하고 git bash here 하면 깃터미널 열림
+-> git config --global user.(name혹은email) "(이름혹은이메일)"로 이름과 이메일 설정
+-> git init(현재폴더를 깃 저장소로 초기화하는 명령어)
+
+ls(폴더내 항목 나열)
+ls -al(숨겨진항목도 나열)
+
+clear(터미널 깨끗하게)
+
+
+
+working directory
+내가 작업을 하는 공간
+
+staging area
+수정이력을 기록하는 파일이 있는 공간
+
+repository
+스테이징에서 대기중인게 최종 기록되는 공간
+커밋내용을 기억
+
+
+명령어
+
+
+git status	깃프로젝트 상태를 확인
+
+git add	워킹디렉토리의 문서를 스테이징에 추가
+
+git reset	스테이징을 초기화할  수 있다(다시 워킹디렉토리로)
+git reset 커밋해시 (--hard, --mixed, soft)	커밋이력이 되돌아감
+{soft는 리포지토리만 되돌림, mixed는 스테이징, 리포지토리 되돌림, hard는 전부 되돌림}
+git revert 커밋해시(실수한커밋해시)	해당커밋으로 돌아가면서 돌아갔다는 기록을 남김
+
+git commit	스테이징의 문서를 리포지토리에 추가	->	이거하면 커밋메시지를 쓰라고 나옴 sft + i면 인서트라 나오는데 
+거기다 메세지 쓰면 댐. ->esc로 insert 없애고 :wq입력후 엔터하면 댐
+
+git log	커밋한 수정이력을 확인
+git log -p	커밋의 변경사항까지 함께 출력	q눌러야 나옴
+git log --oneline		각 커밋을 요약해 한줄씩 출력
+git log -숫자	최신커밋 숫자만큼만 보여줌
+
+touch		원하는 이름으로 파일 생성 ex) text1.txt
+
+git checkout 커밋해시	문서내용을 특정커밋의 내용으로 되돌림
+
+git reflog	HEAD 포인터의 참조이력을 출력함
+
+git checkout 커밋해시	맞는 시점의 커밋으로(과거로) 돌아감{해시말고 원래대로 돌아가고싶으면 브랜치이름으로도 되는듯?)
+
+git reflog	헤드가 이동한 이력을 보여줌
+
+git commit -m "내용" 하면 인서트 어쩌구 안해도 됨
+
+흐름은
+파일 수정 	->	git add로 스테이징	->	git commit -m ""로 커밋	+->	git log로 커밋의 역사를 볼수 잇슴	커밋메세지는 커밋일자시간, 커밋한사람이름을 올려주는게 좋겟지??
+
+
+.gitignore를 쓰면 수정이력에서 제외할 수 있다
+정확히는 이 파일안에 폴더나 파일이름을 쓰면 됨 직접 수정해도 되지만 명령어로도 가능
+nano 파일이름	하면 터미널이 열리는데 명령어를 통해 수정가능함. ^는 컨트롤임
+
+HEAD는 현재작업중인 브랜치를 가리키는 손가락
+
+
+브랜치는 기존 저장소에서 분기된 저장소의 복사본임
+깃프로젝트가 처음 만들어지면 master 기본브랜치가 만들어짐(main일수도 잇음)
+이름은 딱히 상관없음 권한과 관련된게 아님
+
+
+흐름은 master -> commit1 -> commit2 	→ commit3 -> commit4
+							↘ new branch -> commit3
+
+게다가 여기 갈라져나온 브랜치를 merge로 합칠수도 잇음
+
+
+브랜치 관련 명령어
+
+git branch		현재 브랜치 목록을 봄
+git branch 브랜치이름		새로운 브랜치를 생성함
+git branch -d 브랜치이름	브랜치를 삭제함
+git checkout 브랜치이름	작업중인 브랜치를 변경
+git merge 브랜치이름		현재브랜치에 다른브랜치의 내용을 병합함
+
+
+깃허브 관련 명령어
+
+git remote -v	현재 깃 프로젝트에 등록된 원격저장소 확인
+git remote add 원격저장소이름 원격저장소주소	현재 깃 프로젝트에 원격저장소 등록, 별명 붙임
+git push		로컬저장소의 내용을 원격저장소에 공유
+git pull 		원격저장소의 내용을 로컬저장소에 병합
+
+origin  https://github.com/tynan0909/리포지토리이름 (fetch)		이건 내려받기
+origin  https://github.com/tynan0909/리포지토리이름 (push)		이건 업로드하기
+
+git push -u origin master	origin은 이름임 이걸로 연결하는거임
+
+git clone 원격저장소주소	깃허브의 리포지토리를 복사해옴

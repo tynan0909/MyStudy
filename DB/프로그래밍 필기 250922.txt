@@ -1,0 +1,35 @@
+DAO(data access object)
+List<Bean>
+List<Map?>
+
+
+SQL Injection
+
+SQL 인젝션은 애플리케이션이 데이터베이스에 전달하는 SQL 문장에 공격자가 조작된 입력 값을 삽입해, 
+원래 의도와 다른 SQL이 실행되도록 만드는 보안 취약점입니다. 
+주로 웹 폼, URL 파라미터, 쿠키 등 외부 입력을 적절히 검증하지 않고 SQL에 직접 결합할 때 발생합니다
+
+Statement 바로 쓰면 이걸 당할 수 있으니까 쓰지마라
+conn.prepareStatement()를 써야한다이
+
+이걸 막으려면 시큐리티 코딩이 필요함
+
+PreparedStatement	<-	이게 sql 인젝션을 막는거임
+
+
+JDBC를 쓰려면 
+library -> driver 인식시키고
+connection하고 prepareStatement 써야하고(sql인젝션 예방)
+☆commit하기
+
+자바에서 stmt.executeUpdate();하면 자동 커밋이 되어버림
+자동커밋 끄는법: conn.setAutoCommit(false);를 해주면 댐	
+
+뽑앗던 번호표를 그대로 쓰는법 CURRVAL
+
+
+JDBC정리)
+1. Driver - conn : 1회만 실행
+2. PreparedStatement: 꼭 필요함 sql인젝션 예방
+3. Transaction: Commit이냐 Rollback이냐 결정
+4. Inner Join: Sequence NEXTVAL/CURRVAL

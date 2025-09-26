@@ -1,0 +1,117 @@
+1-1 데이터와 데이터베이스, DBMS
+
+DataBase는 Data + Base
+프로그램을 따로 관리하면 데이터 오류 누락 중복등이 발생 가능하다.
+
+SQL
+Structured
+Query
+Language
+
+sql plus 들어가기
+cmd -> sql plus -> system -> 1234 -> select sysdate from dual;
+
+만약 윈도우 초기화하면 설정하는 
+컴퓨터 이름 Gmk M6
+사용이름 : USER
+비번없음
+
+
+4장 SELECT문의 기본 형식
+
+sql developer 접속 단축키 alt f10
+
+DDL Data definition language		정의	create 				|
+DML Data manipulation language		조작	insert update delete		| sql 3가지를 설명하시오
+DCL Data control language			제어						|(MCD라고 외우셈)
+TCL 
+DQL
+
+중요한거 3가지
+계정생성
+테이블 스페이스 할당(테이블 놓을 공간)(테이블은 건물 테이블스페이스는 땅)
+권한 부여
+
+접속(세션)
+
+CSV : comma separated value <- 쉼표로 값을 분류한 텍스트파일
+
+DB에서 *표는 ALL이란소리
+
+VARCHAR : 크기가 가변적인 CHARACTOR(String과 같다)
+
+DML 명령어(괄호는 기능
+C		R		U		D
+create	read		Update	Delete
+INSERT	SELECT	UPDATE	DELETE
+
+join(조인)☆
+
+두개이상의 테이블을 연결
+
+간단한건 가로로 해도 되지만
+왠만하면 키워드 나올때마다 세로로 만들기
+
+*는 전체를 보는거라 추천하지 않음(개느려짐)
+
+3개 계층
+
+LIVE(사용자)[건드리면 목숨이 위험함]
+DEV(개발)[50명정도 될수잇음]
+LOCAL(개인)[개인용임]
+
+
+실습)
+부서명만 출력해보세요
+
+SELECT DNAME
+FROM DEPT;
+
+
+DISTINCT(중복 제거)[기초중에 기초]
+DISTINCT JOB, DEPTNO의 경우 같은 JOB이어도 DEPTNO가 다르면 출력함
+즉 2개이상 DISTINCT 할수있다.
+
+ALL 중복된것도 전부 꺼냄
+
+컬럼이 가로로 되어있으면 보기 힘드니까
+엔터써서 들여쓰기 해야함
+
+수식을 넣어서 계산도 가능한데, 이러면 컬럼이름이 수식이 되어버려서
+뒤에 AS 별칭 하면 됨
+
+AS는 변수에도 FROM에도 조건에도 붙일 수 있다.
+
+ORDER (순서) BY 기준
+정렬은 기본적으로 오름차순
+ORDER BY 기준 DESC; 하면 내림차순임
+
+정렬도 여러개 정할 수 있다
+ORDER BY 기준 ASC, 두번째기준, DESC; ( ASC는 오름차순 명령어 )
+앞에 있는게 먼저고, 앞 기준이 같을경우 뒤 기준대로
+
+
+5장 WHERE절과 연산자
+
+WHERE는 FROM보다 좁은곳에서 조회하는 명령어임
+EX) SELECT *
+	FROM EMP
+	WHERE DEPTNO = 30; (전체에서 EMP뽑아놓고 사번이 30인 녀석) 자바와 다르게 =가 동등연산자임
+숫자는 그냥 비교하면 되는데 문자는 ' '를 놔야 함
+
+~~WHERE DEPTNO = 30
+	AND JOB = 'SALESMAN';(사번이 30인놈들중 JOB이 세일즈맨인놈)
+
+~~WHERE DEPTNO = 30
+	OR JOB = 'CLERK'; (사번이 30이거나 JOB이 CLERK인놈)
+
+FROM EMP
+WHERE SAL*12 = 36000; (월급X12가 36000인놈)
+>= <=도 가능 (이상 이하)
+
+WHERE ENAME >= 'F'; (이름앞자리가 F보다 큰사람)[F의 뒷자리]
+
+닉네임 별칭 정하기)
+1.일본 
+2.한국 
+3.미국 

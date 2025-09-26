@@ -1,0 +1,517 @@
+8장
+
+남은거
+1. JOIN		|오전
+2. OBJECT		|
+3. ERD				|오후
+4. 설계 실습			|
+5. JDBC
+6. 세미 프로젝트
+오늘은 4번까지 할거
+내일은 56번
+
+쿼리문 기본적인 순서
+SELECT ~~
+FROM @@
+WHERE ##
+ORDER BY $$
+
+WHERE은 필터
+
+UNION은 SELECT1 SELECT2를 세로로 합쳐 하나의 엑셀로 만듬(컬럼이 서로 동일해야 한다)
+그런데 FROM에서 두개를 나열했더니 가로로 합침
+
+카타시안 곱
+
+두집합 A B가 있을때 모든 가능한 순서쌍의 집합.
+FROM에서 12짜리 집합과 4짜리 집합을 놧더니 48줄의 데이터가 나와버림
+
+
+Entitiy Relation	<->	OOP
+
+OOP는 서로 족보가 다른 클래스가 인터페이스로 만날 수 있음(OOP적 사고)
+ENTITIY는 예를들어 부서DEPT와 사원EMP의 관계는
+DEPT당 EMP 하나이상 있고, EMP는 DEPT가 하나씩 있다(EMP가 더 많은 EMP : DEPT = N : 1)
+이 사원이 속한 부서를 알려줘	이 부서에 속한 사원을 알려줘
+이런식으로 물어야 한다는거임
+
+ENTITY RELATION 퀴즈)
+1. 사원, 부서 : 속한				이 사원이 속한 부서
+2. 상품, 주문 : 포함된? 사용된?		이 상품이 포함된?사용된? 주문
+
+
+SELECT *
+FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+ORDER BY EMPNO;
+해석: EMP와 DEPT를 부서번호로 맵핑하고 EMPNO로 정렬
+이것을 JOIN이라 한다 그중에서 교집합(INNER JOIN)
+
+
+SELECT *
+FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+ORDER BY EMPNO;
+해설: 그냥 FROM에 연결고리없이 놔두면 카타시안곱을 해버린다. 
+그래서 WHERE로 
+
+
+SELECT *
+  FROM EMP E, DEPT D
+ WHERE E.DEPTNO = D.DEPTNO
+ORDER BY EMPNO;
+다른점: EMP의 닉네임E, DEPTNO의 닉네임 D를 설정하고 그걸로 불러옴
+
+
+SELECT *
+FROM EMP E
+INNER JOIN DEPT D
+ON E.DEPTNO = D.DEPTNO
+ORDER BY EMPNO;
+다른점: EMP를 DEPT와 이너조인 하겟다고 명시하고 ON 씀. WHERE절 없음. 전문용어로 ANSI SQL(표준)이라 함
+ANSI JOIN은 어디서든 돌아가게 만든거라(글로벌표준) 이렇게 짜는게 좋다 특히 클라우드에서
+(American National Standards Institute)의 약자임
+
+
+SELECT EMPNO, ENAME, DEPTNO, DNAME, LOC
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO;
+결과: 에러(열의정의가 애매합니다)
+
+고친거
+SELECT E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME, D.LOC
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+ORDER BY D.DEPTNO, E.EMPNO;
+결과: DEPTNO로 교집합이 되었음(이너조인)
+
+
+SELECT E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND SAL >= 3000;
+해설: 사원중 연봉이 3000이상인사람을 뽑아서 DEPTNO로 정렬
+
+
+안시로 바꿔보면 이렇게 됨
+SELECT E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+FROM EMP E
+INNER JOIN DEPT D
+ON E.DEPTNO = D.DEPTNO
+WHERE SAL >= 3000;
+해설: AND가 아니라 WHERE 쓰는 이유. AND쓰면 조건문이 ON과 연결됨. 결과는 같지만 성능이 다르다.
+조건으로 짜르고 조인을 하는게 성능에 좋음 - 이걸 SQL튜닝이라고 한다.
+
+
+SELECT *
+  FROM EMP E, SALGRADE S
+ WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL;
+해설: S.LOSAL과 S.HISAL사이에서 뽑기
+
+
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+  FROM EMP E1, EMP E2
+ WHERE E1.MGR = E2.EMPNO;
+해설: 사원의 사수정보(MGR)를 뽑을 수 있다 자기자신을 조인하는걸 셀프조인?리컬시브?라고 함?
+
+
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+  FROM EMP E1, EMP E2
+ WHERE E1.MGR = E2.EMPNO(+)			<- 아웃터조인
+ORDER BY E1.EMPNO;
+해설: 아우터조인. (+)는 뭔가를 채워줘야 한다는 뜻이다. 
+결과
+7369	SMITH	7902	7902	FORD
+7499	ALLEN	7698	7698	BLAKE
+7521	WARD	7698	7698	BLAKE
+7566	JONES	7839	7839	KING
+7654	MARTIN	7698	7698	BLAKE
+7698	BLAKE	7839	7839	KING
+7782	CLARK	7839	7839	KING
+7839	KING							<- 여기 다 눌임(이걸보면 아웃터조인인걸 알아야 한다이)
+7844	TURNER	7698	7698	BLAKE
+7900	JAMES	7698	7698	BLAKE
+7902	FORD	7566	7566	JONES
+7934	MILLER	7782	7782	CLARK
+아웃터조인중에서도 LEFT쪽임(+)가 오른쪽에 있으면 반대가 기준. 오른쪽이 데이터가 부족해서 가짜데이터를 넣음
+
+이걸 안시스타일로 만드려면 
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+  FROM EMP E1
+  LEFT OUTER JOIN EMP E2 ON E1.MGR = E2.EMPNO
+  ORDER BY E1.EMPNO;
+이렇게 하면 됨. 보통 레프트를 많이 씀. 이유는 메인테이블을 먼저놓고(왼쪽) 그다음에 변수많은게 나중(오른쪽)이라.
+PRACTICE자료로 따지면 사원정보가 먼저 있고 MGR(사수)가 없는사람한테 가짜데이터라도 넣어주라는거임
+
+####아웃터조인을 뽑을줄 알아야 중급레벨####
+
+만약 예시에서 RIGHT OUTER JOIN을 하면 부하가 없는사람까지 넣고 그밑에 가짜데이터를 사원에 넣어버림
+(사수가 아닌사람을 찾아보기엔 괜찮음)
+
+퀴즈
+
+상품/주문을 아싸(아우터조인)로 설명해보자
+1) 상품중 주문이 안된것도 뽑아봐
+2) 주문중 상품이 없는것도 뽑아봐
+
+INNER, LEFT OUTER, RIGHT OUTER 다 알아야댕
+(+)가 잇는쪽이 NULL이 있는 쪽
+
+
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+  FROM EMP E1, EMP E2
+ WHERE E1.MGR(+) = E2.EMPNO
+ORDER BY E1.EMPNO;
+결과는 위와 같다.
+
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+       DEPTNO, D.DNAME, D.LOC
+  FROM EMP E NATURAL JOIN DEPT D
+ORDER BY DEPTNO, E.EMPNO;
+신규명령어 NATURAL JOIN이란? 이름이 같은 컬럼을 자동으로 조인한다.(INNER JOIN의 대체품)
+간단하지만 위험해서 잘 안씀
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+       DEPTNO, D.DNAME, D.LOC
+  FROM EMP E JOIN DEPT D USING (DEPTNO)
+ WHERE SAL >= 3000
+ORDER BY DEPTNO, E.EMPNO;
+신규명령어 JOIN ~ USING도 잘 안씀
+
+
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+  FROM EMP E1 FULL OUTER JOIN EMP E2 ON (E1.MGR = E2.EMPNO)
+ORDER BY E1.EMPNO;
+신규명령어 FULL OUTER JOIN이란? LEFT OUTER, RIGHT OUTER 두개 결과를 다 얻을 수 있음(테스트용으로 좋음)
+다이어그램으로 치면 두 동그라미 다 칠한거.
+좀만 더 다듬으면 교집합만 뺀 기공같이 생긴걸 얻을수 잇음(NULL값이 있는것만 뽑아내기)
+
+
+
+
+9장(고급쿼리)		서브쿼리
+
+
+SELECT *
+  FROM EMP
+ WHERE SAL > (SELECT SAL
+                FROM EMP
+               WHERE ENAME = 'JONES');
+셀렉트절을 하나 더 넣을 수 있다(소괄호 안에). 존재가능한곳? 모든곳에(SELECT도 FROM도 WHERE도)
+쿼리안에 쿼리가 있다
+해석은 괄호안에먼저 하는게 좋다(괄호내부를 긁어서 실행해보면 됨)
+서브쿼리를 만드는 이유? 계속 변하는 값(EX.평균연봉)을 넣고싶을때 쓰면 됨(쿼리 두번 날리지 마라 성능떨어져)
+그래서 해석해보면 (존스연봉=2975)보다 많이 받는 사람을 뽑아봐 인거다
+
+
+SELECT *
+  FROM EMP
+ WHERE HIREDATE < (SELECT HIREDATE
+                     FROM EMP
+                    WHERE ENAME = 'SCOTT');
+해석: (스캇의 입사일)보다 작은사람[오래된사람] 뽑아줘
+
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+  FROM EMP E, DEPT D
+ WHERE E.DEPTNO = D.DEPTNO
+   AND E.DEPTNO = 20
+   AND E.SAL > (SELECT AVG(SAL)
+                  FROM EMP);
+해석: 20번부서면서 (전체평균연봉)보다 많이 받는사람 뽑아줘
+
+
+SELECT *
+  FROM EMP
+ WHERE DEPTNO IN (20, 30);
+해석: 사원번호가 (20 OR 30)인 사원리스트 뽑아줘
+IN은 특정값을 나열할 때 가장 좋다.(복수의 데이터를 넣을 수 있다) 데이터 하나면 = 쓸수도 잇음
+만약 =을 쓰고싶다 그러면 = ANY, ALL, SOME하면 대긴함(< > 이런거 쓸때 쓸수 잇음)
+
+
+SELECT *
+  FROM EMP
+ WHERE SAL IN (SELECT MAX(SAL)
+                 FROM EMP
+               GROUP BY DEPTNO);
+해석: (부서별 사원중 SAL이 가장 높은사람)의 연봉과 이름 뽑아줘
+만약 GROUP BY를 없애면 그냥 가장 높은 KING만 나온다.
+
+
+SELECT *
+  FROM EMP
+ WHERE EXISTS (SELECT DNAME
+                 FROM DEPT
+                WHERE DEPTNO = 10);
+해석: EXISTS는 존재하다라는뜻, 10번부서에 존재하는 사원이 누군지 뽑아와라..가 아니라 10번부서가 잇으면 뽑아와라
+숫자를 40으로 바꿔도 나오는 이유는? 이게 사실 40번부서가 존재하면 전체 뽑아와라는 뜻이기 때문 
+쓸만한 용도는 주문내역이 있으면 뽑아와라~ 같은거(체크해보고 하는거니까 성능이 좋다)
+
+
+SELECT *
+  FROM EMP
+ WHERE (DEPTNO, SAL) IN (SELECT DEPTNO, MAX(SAL)
+                           FROM EMP
+                         GROUP BY DEPTNO);
+해석: 부서별로 연봉이 가장 높은사람 뽑아줘
+
+
+SELECT E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+  FROM (SELECT * FROM EMP WHERE DEPTNO = 10) E10,
+       (SELECT * FROM DEPT) D
+ WHERE E10.DEPTNO = D.DEPTNO;
+해석: 10번부서 사원정보와 부서를 조인해서 만드ㄹ고?
+FROM절에도 넣을수 잇다
+
+
+WITH
+E10 AS (SELECT * FROM EMP WHERE DEPTNO = 10),
+D AS (SELECT * FROM DEPT)
+SELECT E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+  FROM E10, D
+ WHERE E10.DEPTNO = D.DEPTNO;
+해석:결과는 위와 같음
+WITH는 뭐야몰라
+WITH 절은 Common Table Expression(CTE)을 정의해 복잡한 쿼리를 단계별로 나누어 작성할 수 있도록 돕는 SQL 구문입니다.
+서브쿼리를 여러 번 참조하거나 가독성을 높이고자 할 때 유용하며, 특히 재귀 쿼리 작성에도 필수적입니다.
+
+
+SELECT EMPNO, ENAME, JOB, SAL,
+       (SELECT GRADE 
+          FROM SALGRADE
+         WHERE E.SAL BETWEEN LOSAL AND HISAL) AS SALGRADE,
+       DEPTNO,
+      (SELECT DNAME
+         FROM DEPT
+        WHERE E.DEPTNO = DEPT.DEPTNO) AS DNAME
+FROM EMP E;
+해석: 몰라
+SELECT절에도 서브쿼리가 가능해용
+FROM에 조인하는게 성능이 좋다 ☆
+
+
+SELECT FROM WHERE 복습
+순서대로 결과 컬럼을 정의하고(SELECT), 데이터를 가져올 테이블을 지정하며(FROM), 원하는 행만 필터링합니다(WHERE).
+
+쉽게 생각하면 FROM에서 데이터를 가져와서 WHERE에서 필터링을 하고 SELECT로 지정한다..?
+
+
+
+
+10장 데이터를 추가, 수정, 삭제하는 데이터 조작어
+
+CREATE TABLE DEPT_TEMP
+    AS SELECT * FROM DEPT;
+결과: Table DEPT_TEMP이(가) 생성되었습니다.
+테이블 복사(데이터도 복사됨) 하는이유? -> 다른사람도 쓰는데 내가 쓰려면 따로 만들어야하니까
+그러나 너무 많이 복사되서 렉걸림
+
+껍데기만 복사하는 명령어는?
+원하는 테이블로 들어가서 열-데이터-MODEL...에서 끝의 SQL 선택하면
+테이블 스크립트란게 나옴
+거기에 테이블 오너가 나오고 테이블이름이 나옴 "SCOTT"."DEPT" 이렇게 함
+일단 스크립트를 싹 명령어칸에 복사하고 테이블이름만 좀 바꾸면 댐.
+CONSTRAINT는 제약조건 이란 뜻이고 데이터가 지켜야할 규칙을 정함
+
+정규화
+제1정규화: 정보가 수정될 때 여러곳 수정할 일 없도록 한곳에서 관리한다(PRIMARY KEY로 관리함. 중복이 안된다)
+중복이 안되니까 다른데이터와 식별할 수 있다
+EX) 동명이인이 있을수 있지만 인천의 김철수와 서울의 김철수로 분리해서 구별하는 느낌?
+
+그리고 스크립트 마지막에 TABLESPACE가 있는데 이건 아파트단지같은거임(대지 다음) 그냥 그대로 놔두면 됨
+USING INDEX~블라블라 이런건 건드리지 마셈
+
+즉 신경쓸건 CREATE TABLE, CONSTRAINT랑 PRIMARY KEY, TABLESPACE만 확인
+
+정리하자면 테이블 새로 만들고싶으면 테이블 스크립트를 긁어서
+명령어칸에 넣고, 테이블이름, 콘스트레인트이름 바꾸면 대는거임
+이건 복사된 테이블이니까 내가 맘대로 쓰면 됨(껍데기만 잇음)
+제대로 신청서써서 하려면 이렇게 하면 됨
+
+근데 또 쉽게 복사하는법? CREATE TABLE DEPT_TEMP AS SELECT * FROM DEPT;에서
+*말고 데이터없는놈 골라서 복사하면 되긴함 
+EX)
+CREATE TABLE DEPT_TEMP3 AS 
+SELECT * 
+FROM DEPT
+WHERE 1 = 2;
+하면 데이터 없는 테이블이 된다
+
+
+INSERT
+
+INSERT INTO DEPT_TEMP
+VALUES(50, 'NETWORK', 'BUSAN');
+결과: 1 행 이(가) 삽입되었습니다.
+원래는 두줄 사이에 괄호로 (DEPTNO, DEPTNAME, LOC) 넣어야되지만
+밸류에서 전부 순서대로 제대로 넣으면 생략가능함(만약 순서나 생략된게 잇으면 괄호로 지정해야한다)
+
+여기서 그냥가면 저장안되고 커밋해야 저장
+
+사용법 복습
+INSERT INTO 테이블이름
+(데이터 순서대로 지정하는 괄호)
+VALUES(데이터들);
+하고 COMMIT;
+
+CREATE~ SELECT로 만들면 제약조건이 만들어지지 않아서
+중복체크가 안될 수도 있다는 단점이 있다.
+
+제약조건이 없으면 중복되게 데이터삽입이 될 수 있다.
+
+FOREIGN KEY(연결되어잇다는뜻)는 제약조건중 하나로 다른데서 함부로 지울 수 없게 함
+요즘은 이게 너무 귀찮아서 설정을 안하는 추세
+
+CREATE TABLE "SCOTT"."EMP_TEMP"
+CONSTRAINT "PK_EMP2" PRIMARY KEY ("EMPNO")
+CONSTRAINT "FK_DEPTNO2" FOREIGN KEY ("DEPTNO2")
+REFERENCES "SCOTT"."DEPT_TEMP"
+
+이 4가지를 수정해주면 된다이
+
+테이블 지우려면 DROP TABLE 테이블이름;
+
+INSERT INTO EMP_TEMP 
+(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)
+VALUES 
+(9999, 'TYNAN', 'PRESIDENT', NULL, '2025/09/18', 10000, 5000, 10);
+결과 : 에러발생(무결성 제약조건(SCOTT.FK_DEPTNO2)이 위배되었습니다- 부모 키가 없습니다)
+이유 : 껍데기만 복사한곳이라 EMPNO ENAME JOB등이 없어서 -> 데이터 넣으니까 잘 들어감
+
+
+UPDATE는 원래 있는걸 바꾸는 명령어
+UPDATE DEPT_TEMP SET
+LOC = 'SEOUL';
+결과: 4개 행 이(가) 삽입되었습니다.
+4개 행 이(가) 업데이트되었습니다.
+모든 로케이션이 서울이 되어버렸다
+이유 -> 조건을 안줘서
+
+되돌리는거 ROLLBACK;
+결과: 넣은거 다 날라감
+이유 -> 커밋 안해서ㅋㅋ
+그래도 혹시 누가 실수로 누를수도 있으니까
+실행되지 않게 주석처리(--) 해놓거나 지워놓아라.
+그리고 스크립트실행 하지 마라 전부실행되다가 커밋돼버린다
+
+뭘 시킬거면 꼭 WHERE절(조건)을 넣자
+안그럼 이상한거까지 지워져버림
+
+실습
+40번부서를 INSERT, UPDATE, DELETE, ROLLBACK까지 해보자
+
+
+트랜잭션(Transaction)**은 "하나의 업무" 또는 "하나의 논리적인 작업 단위"를 의미해요.
+여러 개의 작은 작업들이 묶여서, 모두 성공하거나(Commit) 아니면 
+모두 실패하여 원래 상태로 되돌아가는(Rollback) 'All or Nothing'의 개념이죠.
+
+
+
+
+12장	트랜잭션 제어와 세션
+
+ALTER TABLE DEPT_TEMP ADD FLOOR VARCHAR2(20);
+결과: DEPT_TEMP에 FLOOR라는 컬럼이 생김		<-	롤백의 대상이 되지 않음
+
+컬럼지우기
+ALTER TABLE DEPT_TEMP DROP COLUMN FLOOR;
+결과: Table DEPT_TEMP이(가) 변경되었습니다.(지워짐)
+
+DROP은 테이블 자체를  삭제(휴지통 복구 가능)
+TRUNCATE는 데이터만 삭제하고 구조는 유지(휴지통복구 불가)	
+DROP TRUNCATE 둘다 롤백되지 않는다.
+
+ALTER TABLE DEPT_TEMP RENAME COLUMN DNAME TO DEPT_NAME;	<- 컬럼DNAME을 DEPT_NAME으로
+ALTER TABLE DEPT_TEMP RENAME TO DEPT_TEMP2;			<-테이블 DEPT_TEMP를 DEPT_TEMP2로
+중요한건 ALTER TABLE이니까 이거만 기억해라
+
+
+
+
+
+13장	객체 종류
+
+SELECT * FROM DICT;
+DICTIONARY를 열 수 있음
+
+SELECT TABLE_NAME
+  FROM USER_TABLES;
+해석: 내 계정의 테이블중 테이블이름을 뽑아줘
+
+SELECT OWNER, TABLE_NAME
+  FROM ALL_TABLES;
+해석: 전체 테이블의 테이블이름과 오너를 뽑아줘
+
+알아야될 중요한거
+테이블
+뷰
+인덱스
+프로시저
+함수
+시퀀스
+동의어
+데이터베이스 링크
+
+
+인덱스(목차,색인)
+
+목적: 빠른 검색
+
+전체 데이터의 축소판이라고 할 수 있음
+사용자->인덱스->실제데이터		이런식으로 빠르게 데이터를 찾을 수 있다.
+인덱스 객체
+
+PK가 뭐냐?
+1. 유니크하다(중복X)
+2. INDEX가 잡혀있다 = JOIN이 빠르다
+그중 FOREIGN KEY가 잇으면 삭제가 어렵기 때문에 따로 설정 안하는 경우 많음(반정규화)
+
+CREATE INDEX IDX_EMP_SAL
+    ON EMP(SAL);
+결과:인덱스 생성됨
+
+CREATE VIEW VW_EMP20
+    AS (SELECT EMPNO, ENAME, JOB, DEPTNO
+        FROM EMP
+        WHERE DEPTNO = 20);
+결과: 실패(권한없음)	권한준 이후: View VW_EMP20이(가) 생성되었습니다.
+
+DELETE FROM VW_EMP20; 결과: 3개 행 이(가) 삭제되었습니다.(롤백함)
+
+
+뷰의 사용목적
+
+뷰는 SELECT문을 저장한 객체임
+그래서 서브쿼리 대신 쓰기 갱장히 편리하고
+테이블에서 VIEW의 결과물만 접속해서 볼수 있기 때문에
+보안이 좋다
+DELETE말고 DROP으로도 지울수 잇음
+
+
+CREATE SEQUENCE SEQ_DEPT_SEQUENCE
+    INCREMENT BY 10
+    START WITH 10
+    MAXVALUE 90
+    MINVALUE 0
+    NOCYCLE
+    CACHE 2;
+결과: Sequence SEQ_DEPT_SEQUENCE이(가) 생성되었습니다.
+시퀀스 내용. 10번부터 시작해서 최대 90까지 증가한다...
+
+SELECT SEQ_DEPT_SEQUENCE.NEXTVAL
+FROM DUAL;
+결과: NEXTVAL 이 10이 됨. 할때마다 10씩 증가, 90까진 대고 넘어가니까 오류남
+SELECT SEQ_DEPT_SEQUENCE.CURRVAL
+FROM DUAL;
+이건 현재번호만 체크함

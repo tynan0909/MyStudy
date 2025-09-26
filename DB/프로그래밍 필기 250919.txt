@@ -1,0 +1,87 @@
+JDBC
+ERD
+팀별 세미프로젝트
+발표
+
+VIEW란?
+1. 복잡한 커리의 단순화.
+여러 테이블을 조인하거나 복잡한 쿼리를 뷰로 만들어두면
+SELECT만으로 간단하게 사용할 수 있다
+
+2. 보안 강화
+3. 논리적 독립성 제공
+
+
+
+ROWNUM(모르면간첩)
+Oracle 데이터베이스에서 사용되는 특별한 가상 컬럼
+이 컬럼은 테이블에 실제로 데이터로 저장되어 있지 않아요. 
+대신, 쿼리문이 실행될 때 결과 집합의 각 행에 1부터 시작하는 순서 번호를 자동으로 매겨주는 역할
+
+SELECT ROWNUM, E.*
+  FROM (SELECT *
+          FROM EMP E
+        ORDER BY SAL DESC) E
+ WHERE ROWNUM <= 3;
+해석: 몰라
+결과
+1	7839	KING	PRESIDENT		81/11/17	5000		10
+2	7902	FORD	ANALYST	7566	81/12/03	3000		20
+3	7566	JONES	MANAGER	7839	81/04/02	2975		20
+
+
+CREATE SYNONYM E
+   FOR EMP;
+결과: 권한부족 -> 권한주고나서 -> Synonym E이(가) 생성되었습니다.
+
+SYNONYM이란? 번역해보면 동의어라고 나옴
+여기서는 '같은의미'라고 쓰인다
+EXP E에서 E와 같은 느낌?
+SYNONYM을 제공한다는건 테이블에 가명을 부여하겠다는 의미이다.
+
+따라서 보안적인 측면에서 VIEW, SYNONYM을 쓸 수 있다.
+
+
+정리
+ORACLE OBJECT
+1. INDEX: 검색속도 향상
+2. SEQUENCE: 번호표(PK+1), 순번, 리스트(여러사람 동시에 들어왓을때 중요해짐)
+3. VIEW: 가상 테이블, 보안, 보여주고싶은 컬럼만 보여준다
+4. SYNONYM: 실제테이블명을 숨기는 기능(보안)
+ISVS로 외워랑
+
+
+CREATE TABLE TABLE_NOTNULL(
+   LOGIN_ID VARCHAR2(20) NOT NULL,
+   LOGIN_PWD VARCHAR2(20) NOT NULL,
+   TEL VARCHAR2(20)
+);
+NOTNULL이란? NULL이면 안된다(데이터 입력이필수라는 의미)
+이것을 제약조건이라 한다
+제약조건은 PK도 있다.(UNIQUE하며 INDEX도 생김)
+PK라고 하면 딱 두개 떠올려라 UNIQUE(제약조건, 중복안됨) INDEX(자동생성)
+왠만한 테이블은 PK를 제약조건에 걸어둔다.(FOREIGN키까지는 잘 안씀)
+
+
+CREATE TABLE TABLE_UNIQUE2(
+   LOGIN_ID VARCHAR2(20) CONSTRAINT TBLUNQ2_LGNID_UNQ UNIQUE,	<- 이거 넣으면 중복이 안된단거
+   LOGIN_PWD VARCHAR2(20) CONSTRAINT TBLUNQ2_LGNPW_NN NOT NULL,
+   TEL VARCHAR2(20)
+);
+
+
+CREATE TABLE TABLE_PK(
+   LOGIN_ID VARCHAR2(20) PRIMARY KEY,	<- 이렇게 PRIMARY KEY를 설정해줘도 된다
+   LOGIN_PWD VARCHAR2(20) NOT NULL,
+   TEL VARCHAR2(20)
+);
+
+
+CREATE TABLE TABLE_CHECK(
+   LOGIN_ID VARCHAR2(20) CONSTRAINT TBLCK_LOGINID_PK PRIMARY KEY,
+   LOGIN_PWD VARCHAR2(20) CONSTRAINT TBLCK_LOGINPW_CK CHECK (LENGTH(LOGIN_PWD) > 3),
+   TEL VARCHAR2(20)
+);												↑패스워드가 3자이상인지 체크한다는거
+
+
+
