@@ -1,0 +1,39 @@
+input type은 엄청 많은 종류가 있다 알아서 찾아내셈
+사용법은 input type="쓰고싶은거"
+
+오늘배울거
+5. 폼 태그
+6. 파일 업로드
+7. 유효성 검사
+. . .
+
+Attribute 종류
+checked	disabled	max	maxlength
+min	pattern	readonly	required
+size	step	value	. . .
+
+폼태그 6가지 text, select, radio, checkbox, textarea, file 실습해보기(파일은 제외)
+주제는 설문조사 양식
+
+보통 펑션은 /body 바로 위에다 만든다고 함
+
+
+파일 업로드
+
+파일업로드 라이브러리 잇음 그거쓰셈
+
+MultipartRequest: cos.jar	(스킵)	it서적 보면 동물그려진거 잇는데 그게 oreilly임
+
+아파치 API: commons-fileupload.jar	commons-io.jar
+파일업로드 하는법: 	enctype="multipart/form-data"
+
+1. form이 multipart라는거 기억
+2. req도 multipart로.				Multi(Form, Req)
+서버에서 해석할때 멀티파트 리퀘스트로 구분해서 돌려줌
+
+규칙1. enctype="multipart/form-data" 넣기
+규칙2. 아파치계열 라이브러리 넣기	commons-fileupload2-core-2.0.0-M4	commons-fileupload2-jakarta-servlet6-2.0.0-M4	commons-fileupload2-javax-2.0.0-M4	commons-io-2.20.0
+규칙3. upload.setFileSizeMax(1024*1024);		upload.setSizeMax(1024*1024); 이건 사이즈 정하는거
+규칙4. String uploadPath = "경로";	이건 경로 정하는거
+규칙5. 가장중요한거 List<FileItem> formItems = upload.parseRequest(request); 왠진모름
+
