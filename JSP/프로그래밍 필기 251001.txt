@@ -1,0 +1,110 @@
+8장. 유효성 검사(validation)
+
+front에서도 걸러보고 back에서도 걸러보고 db에서도 걸러보고
+
+action="#"은 페이지를 이동하지 않고 스크립트에서 처리를 원할때 사용한다?
+현재 페이지의 URL을 대상으로 지정하라는 의미입니다.
+브라우저는 폼이 제출될 때, 데이터를 현재 보고 있는 바로 그 페이지로 다시 전송하게 됩니다.
+(가장 큰 이유) 테스트 또는 클라이언트 측 동작 확인
+
+직접 해보면 리프래시 되고 주소창 뒤에 #붙음
+그리고 스크롤이 맨위로 올라감(아무것도 안넣고 action=""하면 스크롤은 유지되고 리프래시,주소창은 그대로)
+
+페이지에 앵커(#section1)가 있을때 거기로 이동하게 시킬수도 있음!
+
+document.loginForm.passwd.value 이건 입력한 값을 읽을 수 있게 해줌.
+여기서 loginForm, passwd는 내가 정한인풋타입의 name임
+
+만약 name말고 id로 읽으려면 alert창안에 아이디칸을 document.getElementById('id').value로 바꾸고
+아이디 칸에 타입과 name사이에 id="id" 넣음
+
+기본 유효성 검사: 폼 페이지에 입력된 데이터값의 존재유무를 검사한다
+
+데이터형식 유효성 검사: 폼페이지에 입력된 데이터 값이 
+특정 패턴에 적합한지 여부를 검사하며 정규 표현식을 사용한다
+
+focus는 tab키 눌러서 바로 넘어갈수 있게 해줌?
+select는 focus를 포함하고 박스안의 텍스트를 한번에 선택한다(한번에지우기가능)
+
+보통 id 정규식
+
+inNaN은 숫자가 아니라는 의미(공백은 체크 안함)
+
+
+
+9. 다국어 처리
+
+request.getLocale();	<-	이거로 접속자의 로케일정보(윈도우로 판단)를 얻을 수 있음
+properties 파일로 되어있으면 유니코드 써야함, 읽을수잇는프로그램 인스톨 해야함
+
+
+
+10. 예외 처리
+
+프로그램이 처리되는 동안 특정한 문제가 발생했을 때
+처리를 중단하고 다른 처리를 하는것으로 오류처리라고도 한다.
+자바에선 catch, throws로 처리햇음
+
+web에선 3가지방법이 있다.
+1. page디렉티브:		errorPage, isErrorPage를 쓴다
+2. web.xml에 기록:	<error-code>또는 <exception-type>를 이용
+3. try-catch-finally:	자바언어의 예외처리 구문 이용
+
+web.xml이 404페이지같은거임
+
+<%@ page errorPage="errorPage_error.jsp"%>	<-	에러나면 errorPage_error.jsp로 보낸다는 뜻
+
+<%@ page isErrorPage="true"%>	이게 있어야 <%=exception.getMessage()%>	이걸 쓸수잇음(old style)
+
+exception이 더 우선권이 높다
+
+catch는 그냥
+catch (NumberFormatException e) {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("tryCatch_error.jsp");
+		dispatcher.forward(request, response);
+	}이렇게함. forward말고 redirect할수도 잇음
+
+에러코드로도 되고 익셉션타입으로도 됨
+
+
+
+
+11. 필터
+
+필터 여러개를 filter chain이라 함
+보안, 로깅, 성능을 위해 쓸수 잇음
+
+ex)회사의 사이트가 2개잇는데 하나는 사원용, 하나는 관리자용임. 여기서 관리자용은
+ip제한이 잇어서 허용되지 않은 컴퓨터는 필터에 걸려서 접속이 안됨
+
+request뿐 아니라 response도 필터링할 수 있음. 암호화를 하거나 req시간과 resp시간을 체크해서
+성능검사를 할수도 있고.
+
+doFilter를 오버라이딩하면 댐
+
+필터순서는 위에 있는게 먼저임
+
+
+
+XSS공격(크로스 사이트 스크립트)
+
+기존코드에선 게시물을 읽을 경우 xss공격으로 쿠키를 탈취할 수 있음
+이걸 막으려고 
+ returnVal = returnVal.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        returnVal = returnVal.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
+        returnVal = returnVal.replaceAll("'", "&#39;");
+        returnVal = returnVal.replaceAll("eval\\((.*)\\)", "");
+        returnVal = returnVal.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+        returnVal = returnVal.replaceAll("script", "");
+        returnVal = returnVal.replaceAll("iframe", "");
+        returnVal = returnVal.replaceAll("embed", "");
+이렇게 여러 특문을 못써먹게 바꿔버린다
+이걸 찾아내는게 필터
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
+    }
+
+
+SQL Injection	Prepared Statement로 상대
+XSS			이걸 상대하려면 filter
+
