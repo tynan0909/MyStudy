@@ -1,0 +1,48 @@
+1. 트랜잭션이란?
+commit rollback, 작업을 묶은 원자성
+
+2. 조인이란?
+inner
+outer
+cross 조인등 집합모양
+이걸 묶어놓은게 ANSI조인
+
+3. 제약조건이란?
+Not Null
+PK(unique제약+index)
+FK(연관되면 삭제막음)
+Y/N 등등
+
+4. 서브쿼리란?
+SELECT절에도 FROM에도 WHERE에도 사용가능하며
+중첩SELECT임
+
+5. 인덱스 뷰 시노님 시퀀스란?
+인덱스: 
+뷰: 미리 셀렉트해놓은 가상의 테이블(보안성잇고편리함)
+시노님
+시퀀스
+
+6. JDBC란?
+자바와 db연결
+드라이버 필요
+커넥션따야함
+prepare statement(중요,보안)로 sql어쩌고
+
+7. MVC패턴이란?
+moder controller view
+c -> m -> c
+  ->v			포워딩이 중요단어
+
+8. 내장객체란?
+req, resp, session 등등
+new사용하지 않고 점찍어서 사용
+
+9. 스코프란?
+범위다
+공유객체가 있는데 req도잇고 session도잇고 application도 잇다
+req는 금방사라지고 세션은 좀걸리고 appli는 서버꺼지면 사라짐
+
+10. 쿠키와 세션이란?
+쿠키는 브라우저가 가지고잇는 번호표같은거임
+자바스크립트, 자바에서 만들 수 있다.(로그인할때 씀)
