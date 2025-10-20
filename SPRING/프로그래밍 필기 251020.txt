@@ -1,0 +1,62 @@
+스프링시험은 서술단답형+코드형
+
+
+진도
+
+4. AJAX		
+5. RESTful
+6. AOP
+7. Security
+8. SpringBoot	|
+9. JPA		| 이게 최신거
+10.			|
+
+
+오늘은 복습할거임(나한텐아님)
+
+1. DI(Dependancy Injection):	의존성 주입
+A -> B에서 new를 쓰지 말고 하자! why? 메모리에 좋지않음		
+여기서 spring framework가 A에게 B를 전해줄거다(주입)
+그래서 .만 찍고 쓸수 잇게 하겟다.
+
+내장객체란? req resp ...
+주입받는방법: 생성자(매개변수), setter(매개변수)
+SPRING FRAMEWORK(SF)에게 DI를 받기 위해서는
+
+1. 스프링을 인식하는 Bean 등록
+2. 생성자, setter 메소드 주입받기를 기술해야함
+
+scan Package 하면 패키지 내부의 모든 클래스들이 로딩해서 bean으로 등록한다.
+
+S.F란?	
+1. 프레임워크란(DB연결, DI관리 등등 신경쓰지 말고 개발에만 집중하려고 만든거
+2. 스프링은 자바의 백엔드용 프레임워크임
+
+A	ant		이거쓸때는 개발자가 라이브러리 일일히 다운받아서 썻음
+M	maven	여기서 라이브러리 자동으로 관리됨
+G	grade		이건 스프링부트 수업할때 알려줄거임
+이렇게 빌드를 자동화 하는 추세임
+
+servlet은 통신을 받는 역할
+컨트롤러에 그냥 @Controller 하면 컨트롤러의 역할 수행 가능?(서블릿이 인식하고 @RequestMapping("주소")하면 댐)
+
+시큐리티에서 @PreAuthorize("permitAll()") 하면 모두에게 허용하는거임(회원가입할때 사용)
+
+컨트롤러는 서비스가 필요함
+
+spring의 모델은 mvc의 모델이 아니고 잠깐 저장해놓는거임
+
+@ResponseBody는 꼭 알아야함 모르면 간첩	이걸 붙이면 리턴되는 값이 다이렉트로 전달됨$$$$
+이거랑 AJAX 같이쓰는 경우가 많음 
+
+<MultipartFile> 이거도 중요함(여러파일 받을때 사용함)
+
+퀴즈: 게시글 목록 화면 상단 헤더에도 List 버튼을 추가하시오.
+
+document.getElementById('btnList').addEventListener('click'.function(){				☆
+	location.href='/board/list';										☆
+});														<-	☆꼭 외우셈
+
+
+3. MVC	-	Model View Controller
+
