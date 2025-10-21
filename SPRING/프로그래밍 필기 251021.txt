@@ -1,0 +1,67 @@
+AJAX란? 
+
+댓글을 작성하면 바로 붙는거(새로고침없이)
+지도 드래그할때
+게시글에 따봉 눌러줄때 
+증시 실시간 거래량 등등
+
+즉 새로고침없이 페이지를 업데이트하는방법?
+
+AJAX 특징:
+
+1. Asynchronous
+비 동기	<->	동기(게임할때 서로 동기화되어야 할수잇음)
+AJAX는 비동기!
+
+2. XMLHttpRequest
+
+3. Freezing 없음
+
+4. SinglePage
+
+5. Client send? request
+
+하지만 페이지를 종료해도 영상소리가 난다거나
+보안에 문제가 있다
+
+J Query란?
+javascript query임
+이거로 달력만듬
+
+
+html5가 나오고 프론트기술이 표준화됨
+그후 리액트 출현
+
+
+J Query 쓰는법
+
+$(	이거 보면 j쿼리 쓴다고 보면 댐
+j쿼리로 ajax 쓰는법
+$.ajax( ~~	하면 댐
+
+
+restful api란?
+
+client->get/post/put/delete(CRUD)->REST API->DB->REST API->JSON/XML->client
+다른사이트에서 데이터 받아서 그릴수 잇는거임
+@RestController
+
+Swagger사이트도 좋당 백엔드만 하면 알아서 만들어줌
+
+@PathVariable("rno")여기서 rno는 reply no.
+이거로 몇번댓글을 ~해라~~~
+
+jackson(json)쓰는곳도 잇고 gson 쓰는곳도 잇음
+
+json이란?
+JavaScript Object Notation의 약자
+
+	REST방식	쿼리문
+C: 	POST		INSERT	등록
+R: 	GET		SELECT	조회
+U: 	PUT		UPDATE	수정
+D: 	DELETE	DELETE	삭제
+
+그림을 먼저 그리고 스크립트를 써야한다 -> 스크립트는 왠만하면 아래에다 짬
+
+<c:out value="$board.bno }"/> 이거쓰면 보안에 좋음
