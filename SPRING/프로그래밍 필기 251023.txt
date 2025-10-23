@@ -1,0 +1,39 @@
+Spring Boot(스프링 부트)
+
+스프링부트는 프론트가 아니라 서버, 백엔드용임
+build.gradle
+application-prod.properties
+이 두개를 읽을 줄 알면 됨
+
+스프링부트에서 쓰고잇는거
+Embeded Tomcat(내장되어잇음)
+Thymeleaf(JSP)
+JPA
+gradle(메이븐대신)
+Annotation
+
+요즘은 스프링부트에 jpa를 붙여서 쓴다(자동화)
+
+hibernate은 객체를 그대로 db랑 연결시키는 기술
+@Entity는 테이블이라 생각하면 댐
+@Id는 pk(primary key)
+@OneToMany	일대다(게시글?)
+@ManyToOne	다대일(
+@ManyToMany	다대다(추천)
+cascade	연쇄반응(댓글지우면 답글도 지움)
+@Valid	필수체크
+@PreAuthorize("isAuthenticated()")는 로그인 햇는지 체크
+
+VO vs DTO vs Entity
+
+엔티티는 db와 직접적으로 맞닥뜨림
+dto는 전달성 객체(서비스와 서비스를 연결)
+vo는 데이터를 바꿀 수 잇나 없냐(원본이니까 바꾸면 안댐)
+
+
+팀프로젝트 분석)
+팀명/팀장
+주제/동기
+규칙:코딩(ex.성인만 가입가능, 로그인한사람만 ~~가능)
+항목:ERD
+를 글로적으면 댐
