@@ -1,0 +1,200 @@
+while문의 처음으로 돌아가는건 continue문이다
+while true는 무한반복
+
+
+03 - 3 for 문
+
+for 변수 in 리스트(또는 튜플, 문자열):
+	수행할 문장
+	수행할 문장2
+
+tlist = ['one','two','three']
+for i in tlist:
+    print(i)
+이렇게 하면
+one
+two
+three라고 나옴
+
+
+marks = [90,25,67,45,80]
+number = 0
+for mark in marks:
+    number = number +1
+    if mark < 60:
+        continue
+    print("%d번 학생 합격입니다." % number)
+라고 하면 
+1번 학생 합격입니다.
+3번 학생 합격입니다.
+5번 학생 합격입니다.
+라고 나옴
+흐름은 0번인덱스가 1번학생이 되게 넘버에 플러스를 함 -> 그다음에 마크를 비교해서 60이상일때 print로 넘어가고 출력 -> 다시 for로 ㄱㄱ
+
+range(10)은 10미만임
+
+for i in range(2,10):
+    for j in range(1,10):
+        print(i*j, end="")
+        print('')
+이건 i는 2~9, j는 1~9임 -> 2x1~9, 3x1~9 이런식을 반복해서 출력 = 구구단임
+
+
+리스트 컴프리헨션이란?
+
+a = [1,2,3,4]
+result = []
+for num in a:
+    result.append(num*3)
+print(result)
+이거랑
+a = [1,2,3,4]
+result = [num*3 for num in a]
+print(result)
+이게 같은 결과가 나옴
+a = [1,2,3,4]
+result = [num*3 for num in a if num % 2 == 0]
+print(result)
+이렇게 하면 짝수만 나오게 됨(한줄로 축약할수 잇다)
+
+result = [x*y for x in range(2,10)
+              for y in range(1,10)]
+print(result)
+구구단도 이렇게 표현가능
+
+
+enumerate문은 인덱스와 변수를 알려준다
+
+zip함수는 2개이상의 리스트를 합쳐서 쓰고 싶을때
+
+
+
+04 - 1 함수 
+
+입력을 함수로 처리해서 결과를 출력
+쓰는법은 
+def 함수이름(매개변수):
+	수행문장1
+	수행문장2
+
+def add(a, b):
+	return a + b
+이런식으로 a와 b를 받아서 add로이름붙인 함수가 서로 더해서 돌려준다
+
+a = 3
+b = 4
+c = add(a, b)
+print (c)
+이렇게 쓰면댐(c에 저장해서)
+
+
+매개변수(parameter)와 인수(arguments)
+매개변수는 입력으로 전달된 값을 받는 변수
+인수는 함수를 호출할 때 전달하는 입력값을 의미함
+def add(a, b):	#a, b는 매개변수
+	return a+b
+
+print(add(3, 4))	#a, b는 인수
+
+return은 함수를 돌리다가 상대방에게 주는거
+def add(a, b)
+	result = a+ b
+	return result
+는 a+b라는값을 돌려주는거임
+
+
+매개변수가 없는 함수도 가능
+def say():
+	return 'Hi'
+하면
+a = say()
+print(a)할수잇고
+Hi가 출력댐
+
+리턴값이 없는 함수도 가능(그냥 함수가 자체적으로 프린트 하게만들면 댐)
+
+입력값이 몇개가 될지 모를땐 *별표를 쓴다
+def 함수이름(*매개변수):
+	수행할문장
+
+(*매개변수)를 가변적이라고 해서 가변인자라고 한다
+
+def add_mul(choice, *args) 이런식으로 가변이랑 그냥을 같이 쓸수 잇음
+
+**kwargs 이건 키워드 매개변수임 딕서녀리를 받고싶을때 씀
+
+가변변수(*a) 키워드변수 (**a) 이걸 같이 쓸수잇음
+(name, *args, **kwargs): 이런느낌
+
+키워드변수는 a=1이 사용댈때 {'a': 1}이라는 딕셔너리가 댐
+
+리턴값은 언제나 하나다.
+리턴 두개써도 어차피 리턴자체가 강제종료하기때문에 밑의 리턴은 작동안함
+
+(man = True): 이런식으로 해놓으면 초기값으로 설정댐 man을 디폴트로 하겟다는 것
+디폴트값은 중간에 넣지 말고 항상 뒤에 놔야한다
+
+a = 1			함수밖변수a
+def vartest(a):	vartest함수선언
+	a = a+1
+
+vartest(a)		vartest함수 입력값으로 a 대입
+print(a)		a값출력
+
+이런경우엔 밖의 변수와 안의변수가 구분이 어려움
+함수안에서 밖의변수를 쓰려면 global 붙이면 되긴 하는데
+왠만하면 return해서 밖에 넘기는식으로 줘라(헷갈리니까)
+
+리스트나 딕셔너리는 함수에서 변경 가능(참조타입이니까 원본을 바꾸면 같이 바뀜)
+
+
+lambda 예약어
+람다는 람다식임
+def와 같은 역할을 하는데
+복잡한걸 간단하게 표현가능
+
+add = lambda a, b: a+b
+result = add(3,4)
+print(result)
+
+함수를 간단하게 표현할수잇다(리턴없어도 결과를 리턴함)
+
+함수의 독스트링
+"""
+이 안에 잇는건 주석임. 큰따옴표 3개놓는거임
+안에 잇기
+만
+하면
+몇줄이든
+주석이
+댐
+"""
+
+
+04 - 2 사용자 입출력
+
+a = input()
+Life is too short, you need python를입력(스캐너?)
+하면 a에 문장이 저장댐
+
+number = input("숫자를입력하세요:")
+하면
+숫자를입력하세요:가 뜬다
+int(input("나이를입력")) 이런식으로하면 숫자만 받을수도 잇음(그래도 문자열이긴함)
+
+문자열 띄어쓰기는 쉼표로 한다
+print("life", "is", "short") 하면
+life is short 나옴
+거기에 세퍼레이트 sep 뭐 넣으면
+공백대신 life뭐is뭐short 댐
+
+for i in range(10):
+	print(i, end=' ')
+하면 1 2 3 4 5 6 7 8 9로 띄어쓰기 넣음
+
+
+04 - 3 파일 읽고 쓰기
+
+f = open("새파일.txt", 'w')
+f.close()
+하면
