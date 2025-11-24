@@ -1,0 +1,91 @@
+f = open("C:/doit/새파일.txt", 'r')
+while True:
+    line = f.readline()
+    if not line: break
+    print(line)
+f.close()					<- 파일을 열엇으면 닫아야댐
+
+while True:				이거도 무한반복인데
+    data = input()
+    if not data: break		입력값이 없으면 받겟다?읽을 줄이 없으면 break를 수행한다(readline()은 더 이상 읽을 줄이 없을 경우, 빈 문자열('')을 반환한다).
+    print(data)
+
+f.strip()  # 줄 끝의 줄 바꿈 문자를 제거한다.
+f.read()는 파일의 내용 전체를 문자열로 반환한다. 
+
+# add_data.py
+f = open("C:/doit/새파일.txt",'a')
+for i in range(11, 20):
+    data = "%d번째 줄입니다.\n" % i
+    f.write(data)
+f.close()
+여기다가
+C:\Users> cd C:\doit
+C:\doit> python add_data.py
+C:\doit>
+추가하면 20까지 확장댐(왠진모름)
+
+if True:
+    if_var = "if 블록 안의 변수"
+
+print(if_var)  # 정상 작동! "if 블록 안의 변수" 출력
+
+
+for i in range(3):
+    loop_var = "반복문 안의 변수"
+
+print(i)         # 정상 작동! 2 출력
+print(loop_var)  # 정상 작동! "반복문 안의 변수" 출력
+
+
+with open("test.txt", "w") as f:
+    content = "Hello, Python!"  # with 블록 내에서 변수 선언
+    f.write(content)
+
+# with 블록을 벗어난 후에도 변수에 접근 가능
+print(content)  # "Hello, Python!" 출력
+
+
+
+04 - 4 프로그램의 입출력
+
+C:\> type a.txt
+명령어 [인수1 인수2 ...]
+
+이건 sys를 임포트함
+# sys1.py
+import sys
+
+args = sys.argv[1:]
+for i in args:
+    print(i)
+
+
+
+05 파이썬 날개 달기
+05 - 1 클래스
+
+result = 0
+
+def add(num):
+    global result
+    result += num  # 결괏값(result)에 입력값(num) 더하기
+    return result  # 결괏값 리턴
+
+print(add(3))
+print(add(4))
+
+def add1(num):  # 계산기1
+    global result1
+    result1 += num
+    return result1
+
+def add2(num):  # 계산기2
+    global result2
+    result2 += num
+    return result2
+
+클래스는 이렇게 여러개를 만들필요 없음
+클래스가 만든 객체를 인스턴스라고 부름
+
+파이썬에서 언더바 두개 양쪽에 놓으면 생성자란뜻
