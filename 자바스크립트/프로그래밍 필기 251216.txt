@@ -1,0 +1,401 @@
+JS Arrays
+
+const cars = [
+  "Saab",
+  "Volvo",
+  "BMW"
+];
+
+
+const cars = new Array("Saab", "Volvo", "BMW");
+
+
+이런식으로 쓸수 잇음
+
+Array length
+Array toString()
+Array at()
+Array join()
+Array pop()
+Array push()
+Array shift()
+Array unshift()
+Array isArray()
+Array delete()
+Array concat()
+Array copyWithin()
+Array flat()
+Array slice()
+Array splice()
+Array toSpliced()
+이런 메소드가 잇음
+
+그리드도 잇는데 먼말하는지모르겟음
+
+
+Array indexOf()
+Array lastIndexOf()
+Array includes()
+Array find()
+Array findIndex()
+Array findLast()
+Array findLastIndex()
+이건 어레이에서 찾는 메소드임
+
+
+Alphabetic Sort
+Array sort()
+Array reverse()
+Array toSorted()
+Array toReversed()
+Sorting Objects
+Numeric Sort
+Numeric Sort
+Random Sort
+Math.min()
+Math.max()
+Home made Min()
+Home made Max()
+이건 정렬메소드. 그냥 소트하면 오름차순
+
+
+Array Iteration Methods
+Array iteration methods operate on every array item.
+
+Array forEach
+Array map()
+Array flatMap()
+Array filter()
+Array reduce()
+Array reduceRight()
+Array every()
+Array some()
+Array from()
+Array keys()
+Array entries()
+Array with()
+Array Spread (...)
+Array Rest (...)
+이건 원하는거만 뽑는거?
+
+
+
+Loop Type		Description
+for			Iterates over values and expressions
+while			Iterates over a condition
+do...while		Iterates over a condition
+for...in		Iterates over the properties of an Object
+for...of		Iterates over array like objects
+forEach()		Iterates over each element in an Array
+
+
+const person = {fname:"John", lname:"Doe", age:25};
+
+let text = "";
+for (let x in person) {
+  text += person[x];
+}
+이건 객체 person에서 John을 꺼내자는거임
+
+
+Maps는
+// Create an empty Map
+const fruits = new Map();
+
+// Set Map Values
+fruits.set("apples", 500);
+fruits.set("bananas", 300);
+fruits.set("oranges", 200);
+이렇게 key-value로 이루어짐
+
+
+Iterables는
+const name = "W3Schools";
+
+for (const x of name) {
+  // code block to be executed
+}
+이렇게 순환?된다고 함
+
+
+Iterators는
+Symbol.iterator이렇게 해야한다고 함
+Strings
+Arrays
+Typed Arrays
+Sets
+Maps
+이것들이 iterable한 메소드
+// Create an iterator
+const myIterator = Iterator.from([1, 2, 3]);
+
+// Iterate over the elements
+let text = "";
+for (const x of myIterator) {
+  text += x;
+}
+이렇게 for문에서 하나씩 꺼낼수 잇음
+
+
+Generators는
+먼지모르겟음
+
+
+Errors는
+try-catch하면 댐
+try {
+  Block of code to try
+} catch(err) {
+  Block of code to handle errors
+}
+이렇게 함
+
+Type Error 
+Range Error 
+URI Error 
+Syntex Error
+Eval Error
+등이 있고
+숫자가 아닌 에러는 NaN(Not a Number), infinity에러가 뜸
+
+
+Events
+
+<button onclick="document.getElementById('demo').innerHTML = Date()">The time is?</button>
+버튼을 누르면 시간이 나옴
+
+<div id="box" style="width:200px;height:100px;border:1px solid #000;">
+  Move mouse here
+</div>
+
+<script>
+const box = document.getElementById("box");
+
+// Let document listen for mouseover
+box.addEventListener("mouseover", function () {
+  box.innerHTML = "Mouse is over me!";
+});
+
+// Let document listen for mouseout
+box.addEventListener("mouseout", function () {
+  box.innerHTML = "Move mouse here";
+});
+</script>
+이건 마우스를 인식해서 박스안에 마우스가 잇으면 글자가 바뀜
+
+Keyboard Events
+
+<input id="k" type="text" placeholder="Press a key">
+
+<p id="demo"></p>
+
+<script>
+const k = document.getElementById("k");
+
+// Let k listen for keydown
+k.addEventListener("keydown", function (event) {
+  document.getElementById("demo").innerHTML = "You pressed: " + event.key;
+});
+</script>
+이건 무슨버튼을 눌럿는지 띄워줌
+
+<input id="enter" type="text" placeholder="Press Enter">
+
+<p id="demo"></p>
+
+<script>
+const enter = document.getElementById("enter");
+
+// Let enter listen for keydown
+enter.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    document.getElementById("demo").innerHTML = "Enter was pressed!";
+  }
+});
+</script>
+이건 엔터키를 눌럿을때 작동(입력 편하게할때 자주씀)
+
+
+Load Events도 기본임
+웹페이지가 로딩되면 실행되는거
+load (waits for images, CSS, etc.)
+DOMContentLoaded (runs when HTML is ready)
+이런거
+
+<p id="demo"></p>
+
+<script>
+// Add Event Listener to window
+window.addEventListener("load", function () {
+  document.getElementById("demo").innerHTML = "Page is fully loaded!";
+});
+</script>
+이거로 로딩이 끝낫는지 알수 잇음.
+그리고 스크립트는 밑에다가 넣어야댐
+겜바가면 쓸일이 많을것
+
+Timing Events
+
+Function		Description
+setTimeout()	(runs once)
+setInterval		(runs repeatedly)
+clearTimeout	Clears the timeout
+clearInterval()	Clears the inteval
+나중에 동작하도록 하는 메소드
+<button id="btn">Start</button>
+
+<p id="demo"></p>
+
+<script>
+document.getElementById("btn").addEventListener("click", function () {
+  setTimeout(showMsg, 2000);
+});
+
+function showMsg() {
+  document.getElementById("demo").innerHTML = "Hello after 2 seconds!";
+}
+</script>
+버튼을 누르면 2초뒤 반응
+
+<button id="start">Start Counter</button>
+<button id="stop">Stop</button>
+
+<p id="counter">0</p>
+
+<script>
+let myInterval;
+let count = 0;
+
+document.getElementById("start").addEventListener("click", function () {
+  myInterval = setInterval(counter, 1000);
+});
+
+document.getElementById("stop").addEventListener("click", function () {
+  clearInterval(myInterval);
+});
+
+function counter() {
+  count++;
+  document.getElementById("counter").innerHTML = count;
+}
+</script>
+이건 스타트하면 1초마다 카운트 올라가고, stop하면 멈추는거(여러번누르니까 1초에도 여러번 올라감)
+
+removeEvent도 잇음
+
+===========================================================
+
+
+JS Classes
+
+ECMAScript 2015, also known as ES6, introduced JavaScript Classes.
+
+JavaScript Classes are templates for JavaScript Objects.
+
+class Car {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+}
+
+class Car {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+  age() {
+    const date = new Date();
+    return date.getFullYear() - this.year;
+  }
+}
+
+const myCar = new Car("Ford", 2014);
+document.getElementById("demo").innerHTML =
+"My car is " + myCar.age() + " years old.";
+
+이런느낌으로 가능
+
+"use strict" 엄격모드
+클래스 문법에서는 엄격모드가 디폴트임
+
+
+Static class methods are defined on the class itself.
+You cannot call a static method on an object, only on an object class.
+
+class Car {
+  constructor(name) {
+    this.name = name;
+  }
+  static hello() {
+    return "Hello!!";
+  }
+}
+
+const myCar = new Car("Ford");
+
+// You can call 'hello()' on the Car Class:
+document.getElementById("demo").innerHTML = Car.hello();
+
+// But NOT on a Car Object:
+// document.getElementById("demo").innerHTML = myCar.hello();
+// this will raise an error.
+
+static은 new안하고 쓰면 댐
+
+
+JS Asynchronous는 
+Control Flow, Callbacks, Asynchronous, Promises, Async/Await, Reference가 잇음
+
+function myDisplayer(some) {
+  document.getElementById("demo").innerHTML = some;
+}
+
+function myCalculator(num1, num2, myCallback) {
+  let sum = num1 + num2;
+  myCallback(sum);
+}
+
+myCalculator(5, 5, myDisplayer);
+이건 콜백펑션
+
+setTimeout으로 몇초뒤에 실행하거나
+몇초마다 확인하는식으로도 할수잇음
+
+근데 그런거보단 Promise로 어떤조건에서 실행될지 정해놓는게 나음
+// Create a Promise Object
+let myPromise = new Promise(function(myResolve, myReject) {
+  let result = true;
+
+// Code that may take some time goes here
+
+  if (result == true) {
+    myResolve("OK");
+  } else {
+    myReject("Error");
+  }
+});
+
+// Using then() to display result
+myPromise.then(x => myDisplay(x), x => myDisplay(x));
+문제가 해결되면 OK라고 하고 실패하면 error 띄우는 코드임
+
+async function getFile() {
+  let myPromise = new Promise(function(resolve) {
+    let req = new XMLHttpRequest();
+    req.open('GET', "mycar.html");
+    req.onload = function() {
+      if (req.status == 200) {
+        resolve(req.response);
+      } else {
+        resolve("File not Found");
+      }
+    };
+    req.send();
+  });
+  document.getElementById("demo").innerHTML = await myPromise;
+}
+
+getFile();
+
+성공하면 ~~ 실패하면 ~~~~ 
