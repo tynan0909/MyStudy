@@ -1,0 +1,27 @@
+
+서블릿(servlet) 하면 애플릿이 생각나야함
+서버에서 돌아가는 애플릿을 서블릿이라고 함
+서블릿은 was회사에서 개발
+
+jee(java enterprise edition): j2e(e가 두개니까)
+
+옛날엔 홈페이지 만들때 php, cgi, asp같은거 썻음
+
+즉 php, cgi, asp -> j2e -> spring
+
+
+번외)
+web2.0 vs web3.0
+
+2.0은 중앙집중형
+3.0은 만들어지긴 햇지만 시대로는 아직 안옴(nft?)
+
+jee에서 다이나믹웹프로젝트
+html파일은 webapp에 만들면 댐
+경로확인은 properties에서 deployment assembly 들어가서 
+deploy path가 /인줄의 경로를 보면 댐(다른경우가 잇을수도 잇으니까)
+
+서블릿과 html의 차이는
+html은 고정(static)되어잇고 서블릿은 다이나믹(그때그때 만들어서)하게 할수 잇다
+
+jsp는 형태는 html인데 실제로는 서블릿인거임
